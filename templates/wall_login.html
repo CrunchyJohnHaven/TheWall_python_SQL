@@ -1,0 +1,78 @@
+<DOCTYPE! html>
+    <html>
+        <title>Wall Login</title>
+        <head>
+            <style type='text/css'>
+            .wrapper {
+                background-color: beige;
+                height: auto;
+                width: auto;
+                padding: 10px;
+                border: 10px solid black;
+            }
+            .invalid {
+                width:350px;
+                height:auto;
+                border:5px solid black;
+                overflow: scroll;
+                background-color: red;
+                display:block;
+            }
+            .valid {
+                width:350px;
+                height:auto;
+                border:5px solid black;
+                overflow: scroll;
+                background-color: green;
+                display:block;
+            }
+            </style>
+        </head>
+        <body><div class='wrapper'>
+            <h1>Login to The Wall</h1>
+            <form action='/login' method='POST'>
+                <p></p>
+                <label for='email'>Email:<input type='text' name='email' id='email'></label>
+                <p></p>
+                <label for='password'>Password:<input type='password' name='password' id='password'></label>
+                <p></p>
+                <input type="submit" value="Login to the Wall!">
+                </form>
+            <p></p>
+            <p></p>
+            <h2>Register for The Wall</h2>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            <div class="{{category}}">{{message}}</div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+                <form action='/wall_register' method='POST'>
+                <p>
+                <label for='first_name'>First Name: <input type='text' name='first_name' id='first_name'></label>
+                </p>
+                <p>
+                <label for='last_name'>Last Name: <input type='text' name='last_name' id='last_name'></label>
+                </p>
+                <p>
+                <label for='username'>Desired Username: <input type='text' name='username' id='username'></label>
+                </p>
+                <p>
+                <label for='email'>Email: <input type='text' name='email' id='email'></label>
+                </p>
+                <p>                
+                <label for='password'>Password: <input type='text' name='password' id='password'></label>
+                </p>
+                <p>
+                <label for='confirm_password'>Confirm Password: <input type='text' name='confirm_password' id='confirm_password'></label>
+                </p>
+                <p>                
+                <input type='submit' value='Register for The Wall'>
+                </p>
+                </form>
+            </div>
+            </div>
+        </body>
+    </html>
+</DOCTYPE>

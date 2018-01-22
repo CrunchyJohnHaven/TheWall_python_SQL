@@ -1,0 +1,153 @@
+<DOCTYPE! html>
+    <html>
+        <title>The Wall</title>
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta http-equiv="X-UA-Compatible" content="ie=edge">
+            <style type='text/css'>
+            .wrapper {
+                background-color: beige;
+                height: auto;
+                width: 80%;
+                padding-left: 30px;
+                padding-bottom: 160px;
+                border: 10px solid black;
+                display: inline-block;
+            }
+            .logout {
+                height: 20px;
+                position: absolute;
+                right: 370px;
+                top: 40px;
+                vertical-align: top;
+                width: 50px;
+                background-color: beige;
+                display: inline-block;
+            }
+            .welcome {
+                height: 20px;
+                position: absolute;
+                right: 390px;
+                top: 40px;
+                vertical-align: top;
+                width: 150px;
+                background-color: beige;
+                display: block;
+            }
+            .wall {
+                height: 30px;
+                width: 400px;
+                background-color: beige;
+                display: inline-block;
+            }
+            .invalid {
+                width:350px;
+                height:auto;
+                border:5px solid black;
+                overflow: scroll;
+                background-color: red;
+            }
+            .valid {
+                width:350px;
+                height:auto;
+                border:5px solid black;
+                overflow: scroll;
+                background-color: green;
+            }
+            .message {
+                height: auto;
+                border: 5px solid black;
+                background-color: lightblue;
+                margin-bottom: 10px;
+                margin-top: 0px;
+                display: block;
+            }
+            .comment {
+                height: auto;
+                background-color: tan;
+                margin-bottom: 30px;
+                margin-top: 0px;
+                display: block;
+            }
+            form {
+                display:inline-block;
+
+            }
+            ul {
+                height: 100px;
+            }
+            p {
+                margin-top: 3px;
+            }
+            
+            </style>
+        </head>
+        <body>
+            <div class='wrapper'>
+                <h1>The Wall</h1>
+                {% with messages = get_flashed_messages(category_filter=["valid"]) %}
+                {% if messages %}
+                {% for message in messages %}
+                <div class='valid'>{{message}}
+                {% endfor %}
+                </div>
+                {% endif %}
+                {% endwith %}
+                {% with messages = get_flashed_messages(category_filter=["category1"]) %}
+                {% if messages %}
+                {% for message in messages %}
+                <div class='welcome'>{{message}}
+                {% endfor %}
+                </div>
+                {% endif %}
+                {% endwith %}
+                <div class='logout'>
+                    <form action='/logout' method='POST'>
+                    <input type='submit' value='Logout'>
+                    </form>
+                </div>
+                <div class='wall'>
+                    <form action='/wall' method='post'>
+                        <p>Post a Message to The Wall:</p>
+                        <input type="hidden" name="action" value="message">
+                        <textarea name="message" id= "message" cols='180' rows="8"></textarea>
+                        <!-- <label for='wall_post'><input type='hidden' name='wall_post' id='wall_post'></label> -->
+                        <br>
+                        <input type="submit" name="go" value="Post a message">
+                    </form>
+                </div>
+                <ul></ul>
+                {% for m in messages: %}
+                <br>
+                <div class='message'>
+                    <p><strong>{{ m['first_name'] + " " + m['last_name'] + " - " + m["DATE_FORMAT(messages.created_at, '%e, %b, %Y')"]}}</strong></p>
+                    <p></p>
+                    <p><strong>Post:</strong> {{ m['message'] }}</p>
+                </div>
+                    {% for i in comments: %}
+                        {% if i['id'] == m['id'] %}
+                        <div class='comment'>
+                            <p><strong>{{i['first_name'] + ' ' + i['last_name'] + " - " + i["DATE_FORMAT(comments.created_at, '%e, %b, %Y')"]}}</strong></p>
+                            <p></p>
+                            <p><strong>Comment:</strong> {{ i['comment']}}</p>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                <form action="/comment" method="post">
+                    <input type="hidden" name="action" value="{{m['id']}}">
+                    
+                    <textarea name="comment" id="comment" cols="180" rows="2"></textarea>
+                    <br>
+                    <input type="submit" name="go" value="comment">
+                </form>
+            </br>
+                
+                {% endfor %}
+                
+            </div>
+                
+            
+        </body>
+    </html>
+</DOCTYPE>
